@@ -45,7 +45,11 @@ func (g Generator) FindSourceFiles() []SourceFile {
 		}
 
 		if strings.HasPrefix(info.Name(), ".") && path != g.rootPath {
-			return nil
+			if info.IsDir() {
+				return filepath.SkipDir
+			} else {
+				return nil
+			}
 		}
 
 		sourceFiles = append(sourceFiles, SourceFile{Path: path, FileInfo: info})
