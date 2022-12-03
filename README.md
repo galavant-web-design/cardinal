@@ -1,14 +1,14 @@
-# Generator
+# Cardinal
 
 ## Build
 
 ```shell
-go build cmd/generator/generate.go
+go build
 ```
 
 ## Run
 
 ```shell
 cd sample
-../generate
+../cardinal
 ```

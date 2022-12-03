@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 
-	"github.com/tygern/generator/internal/generator"
+	"github.com/tygern/cardinal/pkg/generator"
 )
 
 func main() {
