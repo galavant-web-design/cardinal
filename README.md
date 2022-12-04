@@ -35,13 +35,13 @@ cardinal
 
 ### Build
 
-```shell
-go build
-```
-
 ### Run
 
 ```shell
 cd sample
-../cardinal
+go run ..
+```
+
+```shell
+go build
 ```

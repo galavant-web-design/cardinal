@@ -1,4 +1,3 @@
-- [ ] brackets instead of tag (`{content}`)
 - [ ] marketing site
 - [ ] html files in directories
 - [ ] serve files
