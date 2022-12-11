@@ -1,13 +1,14 @@
 package generator
 
 import (
+	"errors"
 	"log"
 	"strings"
 
 	"github.com/fsnotify/fsnotify"
 )
 
-func Watch(rootPath string, buildPath string, action func()) (*fsnotify.Watcher, error) {
+func Watch(rootPath string, buildPath string, errorChannel chan error, action func()) (*fsnotify.Watcher, error) {
 	watcher, err := fsnotify.NewWatcher()
 	if err != nil {
 		return nil, err
@@ -18,6 +19,8 @@ func Watch(rootPath string, buildPath string, action func()) (*fsnotify.Watcher,
 			select {
 			case event, ok := <-watcher.Events:
 				if !ok {
+					log.Println("watcher stopping")
+					errorChannel <- errors.New("watcher event channel closed")
 					return
 				}
 				if strings.HasSuffix(event.Name, "~") || strings.HasPrefix(event.Name, buildPath) {
@@ -27,6 +30,8 @@ func Watch(rootPath string, buildPath string, action func()) (*fsnotify.Watcher,
 				action()
 			case watchError, ok := <-watcher.Errors:
 				if !ok {
+					log.Println("watcher stopping")
+					errorChannel <- errors.New("watcher error channel closed")
 					return
 				}
 				log.Println("error: ", watchError)

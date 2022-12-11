@@ -26,16 +26,18 @@ func main() {
 		return
 	}
 
-	watcher, err := generator.Watch(rootPath, buildPath, func() { buildSite(finder, gen) })
+	errorChannel := make(chan error)
+	watcher, err := generator.Watch(rootPath, buildPath, errorChannel, func() { buildSite(finder, gen) })
 	if err != nil {
 		log.Fatalf("Unable to watch: %s", err)
 	}
 	defer watcher.Close()
 
-	err = server.Serve(gen.BuildPath)
-	if err != nil {
-		log.Fatalf("Unable to serve: %s", err)
-	}
+	staticServer := server.Serve(gen.BuildPath, errorChannel)
+
+	err = <-errorChannel
+	defer staticServer.Close()
+	log.Fatalf("Fatal error: %s", err)
 }
 
 func buildSite(finder generator.Finder, gen generator.Generator) {
