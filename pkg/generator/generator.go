@@ -6,27 +6,11 @@ import (
 	"log"
 	"os"
 	"path"
-	"path/filepath"
 	"strings"
 )
 
 type Generator struct {
-	rootPath     string
-	templatePath string
-	BuildPath    string
-}
-
-type SourceFile struct {
-	Path     string
-	FileInfo os.FileInfo
-}
-
-func New(rootPath string) Generator {
-	return Generator{
-		rootPath:     rootPath,
-		templatePath: path.Join(rootPath, "template.html"),
-		BuildPath:    path.Join(rootPath, "build"),
-	}
+	BuildPath string
 }
 
 func (g Generator) ClearBuildDirectory() {
@@ -36,34 +20,8 @@ func (g Generator) ClearBuildDirectory() {
 	}
 }
 
-func (g Generator) FindSourceFiles() []SourceFile {
-	sourceFiles := make([]SourceFile, 0)
-
-	err := filepath.Walk(g.rootPath, func(path string, info os.FileInfo, err error) error {
-		if path == g.templatePath {
-			return nil
-		}
-
-		if strings.HasPrefix(info.Name(), ".") && path != g.rootPath {
-			if info.IsDir() {
-				return filepath.SkipDir
-			} else {
-				return nil
-			}
-		}
-
-		sourceFiles = append(sourceFiles, SourceFile{Path: path, FileInfo: info})
-		return nil
-	})
-	if err != nil {
-		log.Fatalf("Unable find source files: %s", err)
-	}
-
-	return sourceFiles
-}
-
-func (g Generator) Build(sourceFiles []SourceFile) {
-	templateBytes := g.readTemplate()
+func (g Generator) Build(sourceFiles []SourceFile, templatePath string) {
+	templateBytes := g.readTemplate(templatePath)
 
 	for _, sourceFile := range sourceFiles {
 		destination := path.Join(g.BuildPath, sourceFile.Path)
@@ -82,10 +40,10 @@ func (g Generator) Build(sourceFiles []SourceFile) {
 
 }
 
-func (g Generator) readTemplate() []byte {
-	templateBytes, err := os.ReadFile(g.templatePath)
+func (g Generator) readTemplate(templatePath string) []byte {
+	templateBytes, err := os.ReadFile(templatePath)
 	if err != nil {
-		log.Fatalf("Unable to read template %s: %s", g.templatePath, err)
+		log.Fatalf("Unable to read template %s: %s", templatePath, err)
 	}
 	return templateBytes
 }

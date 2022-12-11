@@ -4,28 +4,42 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"path"
 
 	"github.com/tygern/cardinal/pkg/generator"
 	"github.com/tygern/cardinal/pkg/server"
 )
 
 func main() {
-	serve := flag.Bool("serve", false, "serve files")
+	runOnly := flag.Bool("run-only", false, "only build files (don't serve and watch)")
 	flag.Parse()
 
-	g := generator.New(".")
+	rootPath := "."
+	buildPath := path.Join(rootPath, "build")
+	finder := generator.NewFinder(rootPath)
+	gen := generator.Generator{BuildPath: buildPath}
 
-	g.ClearBuildDirectory()
-	sourceFiles := g.FindSourceFiles()
-	g.Build(sourceFiles)
-	fmt.Println("Done building")
+	buildSite(finder, gen)
 
-	if !*serve {
+	if *runOnly {
+		fmt.Println("Done building")
 		return
 	}
 
-	err := server.Serve(g.BuildPath)
+	watcher, err := generator.Watch(rootPath, buildPath, func() { buildSite(finder, gen) })
 	if err != nil {
-		log.Fatal(err)
+		log.Fatalf("Unable to watch: %s", err)
 	}
+	defer watcher.Close()
+
+	err = server.Serve(gen.BuildPath)
+	if err != nil {
+		log.Fatalf("Unable to serve: %s", err)
+	}
+}
+
+func buildSite(finder generator.Finder, gen generator.Generator) {
+	gen.ClearBuildDirectory()
+	sourceFiles := finder.FindSourceFiles()
+	gen.Build(sourceFiles, finder.TemplatePath)
 }
