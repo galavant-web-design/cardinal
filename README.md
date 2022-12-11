@@ -3,12 +3,22 @@
 ![cardinal](sample/images/cardinal.png)
 A simple site builder
 
-## Use
+## Install
 
 ```shell
 go install github.com/tygern/cardinal
-cd $YOUR_PROJECT
+```
+
+## Build files
+
+```shell
 cardinal
+```
+
+## Build and serve files
+
+```shell
+cardinal -serve
 ```
 
 ## Project layout
@@ -35,13 +45,13 @@ cardinal
 
 ### Build
 
+```shell
+go build
+```
+
 ### Run
 
 ```shell
 cd sample
 go run ..
-```
-
-```shell
-go build
 ```

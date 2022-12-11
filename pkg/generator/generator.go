@@ -13,7 +13,7 @@ import (
 type Generator struct {
 	rootPath     string
 	templatePath string
-	buildPath    string
+	BuildPath    string
 }
 
 type SourceFile struct {
@@ -25,12 +25,12 @@ func New(rootPath string) Generator {
 	return Generator{
 		rootPath:     rootPath,
 		templatePath: path.Join(rootPath, "template.html"),
-		buildPath:    path.Join(rootPath, "build"),
+		BuildPath:    path.Join(rootPath, "build"),
 	}
 }
 
 func (g Generator) ClearBuildDirectory() {
-	err := os.RemoveAll(g.buildPath)
+	err := os.RemoveAll(g.BuildPath)
 	if err != nil {
 		log.Fatalf("Unable to delete build directory: %s", err)
 	}
@@ -66,7 +66,7 @@ func (g Generator) Build(sourceFiles []SourceFile) {
 	templateBytes := g.readTemplate()
 
 	for _, sourceFile := range sourceFiles {
-		destination := path.Join(g.buildPath, sourceFile.Path)
+		destination := path.Join(g.BuildPath, sourceFile.Path)
 
 		if sourceFile.FileInfo.IsDir() {
 			makeDirectory(destination)
