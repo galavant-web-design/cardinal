@@ -1,11 +1,12 @@
 :root {
     --black: #202030;
-    --white: #EEE5E9;
     --red: #A22522;
+    --white: hsl(333, 21%, 95%);
+    --bright-white: #FFFFFF;
 }
 
 html {
-    font-size: 16px;
+    font-size: 20px;
     box-sizing: border-box;
 }
 
@@ -21,21 +22,19 @@ body {
 
 h1, h2, h3 {
     font-weight: 700;
+    margin-bottom: 1.5rem;
 }
 
 h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
+    font-size: 3.5rem;
 }
 
 h2 {
-    font-size: 2rem;
-    margin-bottom: .75rem;
+    font-size: 3rem;
 }
 
 h3 {
-    font-size: 1.5rem;
-    margin-bottom: .5rem;
+    font-size: 2rem;
 }
 
 a, a:visited {
@@ -43,11 +42,43 @@ a, a:visited {
 }
 
 p {
+    line-height: 1.6;
+}
+
+p:not(:last-child), pre:not(:last-child) {
+    margin-bottom: 1.5rem;
+}
+
+ul {
     line-height: 1.4;
 }
 
-p:not(:last-child) {
-    margin-bottom: 1rem;
+ul li {
+    list-style: disc;
+    margin-top: 0.7rem;
+    line-height: 1.3;
+    margin-left: 2rem;
+}
+
+code {
+    font-family: ui-monospace, SFMono-Regular, SF Mono, Menlo, Consolas, Liberation Mono, monospace;
+    display: inline-block;
+    background-color: var(--bright-white);
+    padding: 0.1rem 0.2rem;
+    border-radius: 0.1rem;
+    font-size: 0.8rem;
+}
+
+pre code {
+    width: 100%;
+    padding: 1.25rem;
+    display: block;
+
+    box-shadow: 0 2px 2px 0 rgb(0 0 0 / 14%), 0 3px 1px -2px rgb(0 0 0 / 20%), 0 1px 5px 0 rgb(0 0 0 / 12%);
+    border-radius: 0.2rem;
+    line-height: 1.6;
+    white-space: pre !important;
+    overflow-wrap: normal !important;
 }
 
 header {
@@ -61,7 +92,7 @@ header {
     justify-content: center;
 
     background-color: var(--red);
-    color: var(--white);
+    color: var(--bright-white);
 }
 
 header h1 {
@@ -69,9 +100,21 @@ header h1 {
     letter-spacing: 2px;
 }
 
-main, footer {
+main {
     margin: 0 auto;
     width: 50rem;
     max-width: 100%;
     padding: 2rem;
+}
+
+footer {
+    padding: 2rem;
+    background-color: var(--black);
+    color: var(--white);
+    text-align: center;
+    font-size: .75rem;
+}
+
+section {
+    padding: 2rem 0;
 }

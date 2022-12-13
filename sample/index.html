@@ -1,1 +1,41 @@
-<h1>Installation</h1>
+<section>
+    <h2>Quickstart</h2>
+
+    <p>
+        Cardinal builds a static site from the files in your current directory and starts a webserver to serve the files
+        locally. Cardinal rebuilds the site whenever the source files change.
+    </p>
+
+    <pre><code>go install github.com/tygern/cardinal@v0.0.6
+cardinal</code></pre>
+</section>
+
+<section>
+    <h2>Project layout</h2>
+
+    <pre><code>.
+├── template.html
+├── index.html
+├── about.html
+├── style
+│   └── app.css
+└── images
+    └── cardinal.png
+</code></pre>
+
+    <ul>
+        <li>
+            The <code>template.html</code> file defines your site template.
+            Cardinal replaces the <code><#content/></code> tag with site content.
+        </li>
+        <li>
+            Any other HTML files define your site's pages.
+            Cardinal applies the template to each HTML file and creates a file with the same name in the
+            <code>build</code>
+            directory.
+        </li>
+        <li>
+            Cardinal also copies all non-HTML files and directories to the `build` directory.
+        </li>
+    </ul>
+</section>
