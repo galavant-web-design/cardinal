@@ -1,4 +1,2 @@
-- [ ] live updates
-- [ ] marketing site
 - [ ] html files in directories
 - [ ] support markdown
