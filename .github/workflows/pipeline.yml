@@ -4,6 +4,32 @@ on:
     branches:
       - main
 jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Pages
+        uses: actions/configure-pages@v2
+      - name: Set up Go
+        uses: actions/setup-go@v2
+        with:
+          go-version: '^1.19'
+      - name: Build site
+        run: |
+          cd sample
+          go run ..
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: './sample/build'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
+
   build:
     runs-on: ubuntu-latest
     strategy:
