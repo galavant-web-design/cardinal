@@ -6,19 +6,22 @@ A simple site builder
 ## Install
 
 ```shell
-go install github.com/tygern/cardinal
+go install github.com/tygern/cardinal@v0.0.6
 ```
 
-## Build files
+## Start the generator
+
+Cardinal builds a site from the files in the current directory and starts a webserver to serve the files locally.
+Cardinal rebuilds the site whenever the source files change.
 
 ```shell
 cardinal
 ```
 
-## Build and serve files
+To build the files once without starting the server run
 
 ```shell
-cardinal -serve
+cardinal -build
 ```
 
 ## Project layout
@@ -37,9 +40,8 @@ cardinal -serve
 - The `template.html` file defines your site template.
   Cardinal replaces the `<#content/>` tag with site content.
 - Any other HTML files define site content.
-  When Cardinal is run it applies the template to each html file and creates a file with the same name in the `build`
-  directory.
-- Cardinal copies all other files and directories to the `build` directory. 
+  Cardinal applies the template to each html file and creates a file with the same name in the `build` directory.
+- Cardinal also copies all non-HTML files and directories to the `build` directory. 
 
 ## Local development
 

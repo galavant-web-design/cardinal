@@ -11,7 +11,7 @@ import (
 )
 
 func main() {
-	runOnly := flag.Bool("run-only", false, "only build files (don't serve and watch)")
+	buildOnly := flag.Bool("build", false, "only build files (don't serve and watch)")
 	flag.Parse()
 
 	rootPath := "."
@@ -21,7 +21,7 @@ func main() {
 
 	buildSite(finder, gen)
 
-	if *runOnly {
+	if *buildOnly {
 		fmt.Println("Done building")
 		return
 	}
