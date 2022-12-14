@@ -142,3 +142,10 @@ footer {
 section {
     padding: 2rem 0;
 }
+
+@media screen and (max-width: 800px) {
+    main {
+        padding: 1rem;
+    }
+}
+
