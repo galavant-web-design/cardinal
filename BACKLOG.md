@@ -1,2 +1,3 @@
+- [ ] add verbose level logging
 - [ ] html files in directories
 - [ ] support markdown

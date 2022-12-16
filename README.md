@@ -6,7 +6,7 @@ A simple site builder
 ## Install
 
 ```shell
-go install github.com/tygern/cardinal@v0.0.6
+go install github.com/tygern/cardinal@v0.0.7
 ```
 
 ## Start the generator
