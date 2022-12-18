@@ -6,8 +6,8 @@ import (
 	"log"
 	"path"
 
-	"github.com/tygern/cardinal/pkg/generator"
-	"github.com/tygern/cardinal/pkg/server"
+	"github.com/galavant-web-design/cardinal/pkg/generator"
+	"github.com/galavant-web-design/cardinal/pkg/server"
 )
 
 func main() {

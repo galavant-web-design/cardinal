@@ -1,4 +1,4 @@
-module github.com/tygern/cardinal
+module github.com/galavant-web-design/cardinal
 
 go 1.19
 
